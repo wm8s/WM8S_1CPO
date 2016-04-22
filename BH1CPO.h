@@ -21,22 +21,30 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-/// TODO: MOVE TO BH ///
-#define ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))
+#define BH_1CPO_NANO
+//#define BH_1CPO_TINYLILYMINI
 
-#define BH_1CPO_TONEPIN 9
-#define BH_1CPO_PB1 10
-#define BH_1CPO_PB2 11
-#define BH_1CPO_PB3 12
+#if defined(BH_1CPO_NANO)
+  #define BH_1CPO_TONEPIN 9
+  #define BH_1CPO_PB1 10
+  #define BH_1CPO_PB2 11
+  #define BH_1CPO_PB3 12
+#elif defined(BH_1CPO_TINYLILYMINI) 
+  #define BH_1CPO_TONEPIN A0
+  #define BH_1CPO_PB1 A1
+  #define BH_1CPO_PB2 A4
+  #define BH_1CPO_PB3 A5
+#endif
+
+#define ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))
 
 #define BH_1CPO_DEBOUNCE_TIME 10
 
 #define BH_1CPO_DEFAULT_SETTING_MODE SendWhat
 
 #define BH_1CPO_PITCHOFFSET_SETTINGMODE 50
-#define BH_1CPO_PITCHOFFSET_SETTINGVALUE (-50)
 
-// max size of setting conformation:
+// max size of setting conformation for now (1st letter):
 
 #define BH_1CPO_MAXSETTINGCFMBUFRSIZE 2
 
@@ -114,9 +122,9 @@ const unsigned int BH_1CPO_Difficulties[] =   // this can be moved to PROGMEM if
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-void debouncePB();                             /// TODO: MOVE TO BH ///
-void waitForPulledupButtonRelease(byte pPin);  /// TODO: MOVE TO BH ///
-bool isPulledupButtonPressed(byte pPin);       /// TODO: MOVE TO BH ///
+void debouncePB();
+void waitForPulledupButtonRelease(byte pPin);
+bool isPulledupButtonPressed(byte pPin);
 
 void sendSettingMode();
 void sendSettingValue();
