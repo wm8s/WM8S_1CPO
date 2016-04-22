@@ -15,7 +15,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-/// TODO: MOVE TO BH ///
 void debouncePB()
 {
   // delay long enough for the switch to debounce:
@@ -23,7 +22,6 @@ void debouncePB()
   delay(BH_1CPO_DEBOUNCE_TIME);
 }
 
-/// TODO: MOVE TO BH ///
 void waitForPulledupButtonRelease(byte pPin)
 {
   // wait for him to let up on the switch:
@@ -32,7 +30,6 @@ void waitForPulledupButtonRelease(byte pPin)
   while (isPulledupButtonPressed(pPin)) {};
 }
 
-/// TODO: MOVE TO BH ///
 bool isPulledupButtonPressed(byte pPin)
 {
   // return true if passed INPUT_PULLUP PB is pressed:
@@ -108,7 +105,6 @@ void sendSettingModeAndValue()
   // send setting mode and value:
     
   sendSettingMode();
-  BH_1CPO.sendMessage(" ");
   sendSettingValue();
 }
 
