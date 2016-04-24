@@ -36,8 +36,6 @@
   #define BH_1CPO_PB3 A5
 #endif
 
-#define ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))
-
 #define BH_1CPO_DEBOUNCE_TIME 10
 
 #define BH_1CPO_DEFAULT_SETTING_MODE SendWhat
