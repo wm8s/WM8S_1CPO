@@ -13,6 +13,9 @@
 //
 //  Header
 //
+//  You can [probably] safely change anything marked with /// CUSTOMIZE: tag.
+//  You probably shouldn't change anything else unless you understand it well.
+//
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -21,25 +24,18 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#define BH_1CPO_NANO
-//#define BH_1CPO_TINYLILYMINI
+/// CUSTOMIZE: put your own pin #s in these four #defines
+#define BH_1CPO_TONEPIN A0
+#define BH_1CPO_PB1 A1
+#define BH_1CPO_PB2 A4
+#define BH_1CPO_PB3 A5
 
-#if defined(BH_1CPO_NANO)
-  #define BH_1CPO_TONEPIN 9
-  #define BH_1CPO_PB1 10
-  #define BH_1CPO_PB2 11
-  #define BH_1CPO_PB3 12
-#elif defined(BH_1CPO_TINYLILYMINI) 
-  #define BH_1CPO_TONEPIN A0
-  #define BH_1CPO_PB1 A1
-  #define BH_1CPO_PB2 A4
-  #define BH_1CPO_PB3 A5
-#endif
-
+/// CUSTOMIZE: if you need more debounce time for your switches
 #define BH_1CPO_DEBOUNCE_TIME 10
 
 #define BH_1CPO_DEFAULT_SETTING_MODE SendWhat
 
+/// CUSTOMIZE: make as high or low as you want
 #define BH_1CPO_PITCHOFFSET_SETTINGMODE 50
 
 // max size of setting conformation for now (1st letter):
@@ -52,6 +48,7 @@
 
 // Setting modes;
 
+/// CUSTOMIZE: nationalize 1st letter of Setting mode
 enum BH_1CPO_Setting_Mode
 {
   SendWhat = 'S',
@@ -61,9 +58,19 @@ enum BH_1CPO_Setting_Mode
   CharSpeed = 'C'
 };
 
+/// CUSTOMIZE: nationalize 1st letter of Send What
+enum BH_1CPO_SendWhat_Mode
+{
+  SendQSOs = 'Q',
+  SendGroups = 'G',
+  SendChars = 'C',
+  Unknown = '?'
+};
+
 // Discrete speeds to rotate through;
 
-const byte BH_1CPO_Speeds[] =                 // this can be moved to PROGMEM if needed
+/// CUSTOMIZE: use your own table of speeds to rotate through
+const byte BH_1CPO_Speeds[] =
 {
   5,
   7,
@@ -82,7 +89,8 @@ const byte BH_1CPO_Speeds[] =                 // this can be moved to PROGMEM if
 
 // Discrete pitches to rotate through:
 
-const unsigned int BH_1CPO_Pitches[] =        // this can be moved to PROGMEM if needed
+/// CUSTOMIZE: use your own table of pitches to rotate through
+const unsigned int BH_1CPO_Pitches[] =
 {
   400,
   500,
@@ -103,7 +111,7 @@ const unsigned int BH_1CPO_Pitches[] =        // this can be moved to PROGMEM if
 
 // Discrete difficulties to rotate through:
 
-const unsigned int BH_1CPO_Difficulties[] =   // this can be moved to PROGMEM if needed
+const unsigned int BH_1CPO_Difficulties[] =
 {
   1,
   2,
@@ -119,6 +127,10 @@ const unsigned int BH_1CPO_Difficulties[] =   // this can be moved to PROGMEM if
 //  Procedures
 //
 ////////////////////////////////////////////////////////////////////////////////
+
+void initIO();
+void handleReset();
+void startMorse();
 
 void debouncePB();
 void waitForPulledupButtonRelease(byte pPin);

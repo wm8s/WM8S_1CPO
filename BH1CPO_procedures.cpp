@@ -13,7 +13,46 @@
 //
 //  Helper Procedures:
 //
+//  You can [probably] safely change anything marked with /// CUSTOMIZE: tag.
+//  You probably shouldn't change anything else unless you understand it well.
+//
 ////////////////////////////////////////////////////////////////////////////////
+
+void initIO()
+{
+  // setup I/O, etc.:
+  
+  pinMode(BH_1CPO_PB1, INPUT_PULLUP);
+  pinMode(BH_1CPO_PB2, INPUT_PULLUP);
+  pinMode(BH_1CPO_PB3, INPUT_PULLUP);
+
+  BH_1CPO.begin(BH_1CPO_TONEPIN);  
+}
+
+void handleReset()
+{
+  /// CUSTOMIZE: you can make this whichever buttons you want
+  // if PB1 & PB2 are pressed when we come on, reset settings:
+
+  if (isPulledupButtonPressed(BH_1CPO_PB1) && isPulledupButtonPressed(BH_1CPO_PB2))
+  {
+    BH_1CPO.beepHi();
+    
+    // wait for him to release both buttons:
+    
+    while (isPulledupButtonPressed(BH_1CPO_PB1) || isPulledupButtonPressed(BH_1CPO_PB2)) {}
+    
+    BH_1CPO.resetSettings();
+  }
+}
+
+void startMorse()
+{
+  // start:
+  
+  if (sending) BH_1CPO.setRunMode(sendingWhat);
+  else BH_1CPO.setRunMode(BHMorse::Idle);
+}
 
 void debouncePB()
 {
@@ -56,26 +95,26 @@ void sendSettingValue()
   // send current setting mode's value:
   
   char bufr[BH_1CPO_MAXSETTINGVALUECFMBUFRSIZE];   
-  
+
   switch (settingMode)
   {
     case SendWhat:
       switch (sendingWhat)
       {
         case BHMorse::SendQSOs:
-          bufr[0] = 'Q';
+          bufr[0] = BH_1CPO_SendWhat_Mode::SendQSOs;
           break;
 
         case BHMorse::SendGroups:
-          bufr[0] = 'G';
+          bufr[0] = BH_1CPO_SendWhat_Mode::SendGroups;
           break;
 
         case BHMorse::SendChars:
-          bufr[0] = 'C';
+          bufr[0] = BH_1CPO_SendWhat_Mode::SendChars;
           break;
 
         default:    // huh?
-          bufr[0] = '?';
+          bufr[0] = BH_1CPO_SendWhat_Mode::Unknown;
           break;
       }
       bufr[1] = '\0';
@@ -182,6 +221,7 @@ void rotateSettingMode()
 {
   // rotate setting mode
 
+  /// CUSTOMIZE: you can change this order, as long as it makes a circle
   switch (settingMode)
   {
     case SendWhat:
@@ -212,6 +252,7 @@ void rotateSendWhat()
 {
   // rotate run mode:
   
+  /// CUSTOMIZE: you can change this order, as long as it makes a circle
   switch (sendingWhat)
   {
     case BHMorse::SendQSOs:
@@ -265,6 +306,7 @@ void rotateSettingValue()
 {
   // rotate setting value of current setting mode
 
+  /// CUSTOMIZE: you can change this order, as long as it makes a circle
   switch (settingMode)
   {
     case SendWhat:

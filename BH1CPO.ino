@@ -13,6 +13,9 @@
 //
 //  Main sketch
 //
+//  You can [probably] safely change anything marked with /// CUSTOMIZE: tag.
+//  You probably shouldn't change anything else unless you understand it well.
+//
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -49,33 +52,12 @@ void setup()
 {
 #ifdef BHMORSE_DEBUG
   Serial.begin(9600);
+  Serial.flush();
 #endif
 
-  // setup I/O, etc.:
-  
-  pinMode(BH_1CPO_PB1, INPUT_PULLUP);
-  pinMode(BH_1CPO_PB2, INPUT_PULLUP);
-  pinMode(BH_1CPO_PB3, INPUT_PULLUP);
-
-  BH_1CPO.begin(BH_1CPO_TONEPIN);
-  
-  // if PB1 & PB2 are pressed when we come on, reset settings:
-
-  if (isPulledupButtonPressed(BH_1CPO_PB1) && isPulledupButtonPressed(BH_1CPO_PB2))
-  {
-    BH_1CPO.beepHi();
-    
-    // wait for him to release both buttons:
-    
-    while (isPulledupButtonPressed(BH_1CPO_PB1) || isPulledupButtonPressed(BH_1CPO_PB2)) {}
-    
-    BH_1CPO.resetSettings();
-  }
-
-  // start:
-  
-  if (sending) BH_1CPO.setRunMode(sendingWhat);
-  else BH_1CPO.setRunMode(BHMorse::Idle);
+  initIO();
+  handleReset();
+  startMorse();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
