@@ -14,7 +14,7 @@
 //  Main sketch
 //
 //  You can [probably] safely change anything marked with /// CUSTOMIZE: tag.
-//  You probably shouldn't change anything else unless you understand it well.
+//  Anything, and you're on your own.
 //
 ////////////////////////////////////////////////////////////////////////////////
 
