@@ -1,8 +1,5 @@
 #include <BHMorse.h>
 
-#ifndef __BH1CPO_H__
-#define __BH1CPO_H__
-
 ////////////////////////////////////////////////////////////////////////////////
 //
 //  1CPO - My First Code Practice Oscillator. Like 3CPO, only mintier.
@@ -18,25 +15,34 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#ifndef __BH1CPO_H__
+#define __BH1CPO_H__
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 //  Defines, enums, and typedefs, oh my
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-/// CUSTOMIZE: put your own pin #s in these four #defines
-#define BH_1CPO_TONEPIN A0
-#define BH_1CPO_PB1 A1
-#define BH_1CPO_PB2 A4
-#define BH_1CPO_PB3 A5
+#define BH_1CPO_TONEPIN A0										/// CUSTOMIZE
+#define BH_1CPO_PB1 A1												/// CUSTOMIZE
+#define BH_1CPO_PB2 A4												/// CUSTOMIZE
+#define BH_1CPO_PB3 A5												/// CUSTOMIZE
 
-/// CUSTOMIZE: if you need more debounce time for your switches
-#define BH_1CPO_DEBOUNCE_TIME 10
+#define BH_1CPO_DEBOUNCE_TIME 10							/// CUSTOMIZE
 
 #define BH_1CPO_DEFAULT_SETTING_MODE SendWhat
 
-/// CUSTOMIZE: make as high or low as you want
-#define BH_1CPO_PITCHOFFSET_SETTINGMODE 50
+// tones
+
+#define BH_1CPO_TONE_HI_1_LOOPS 3							/// CUSTOMIZE
+#define BH_1CPO_TONE_HI_1_HZ	1000						/// CUSTOMIZE
+#define BH_1CPO_TONE_HI_1_DURATION 25					/// CUSTOMIZE
+#define BH_1CPO_TONE_HI_2_HZ 2000							/// CUSTOMIZE
+#define BH_1CPO_TONE_HI_2_DURATION 25					/// CUSTOMIZE
+#define BH_1CPO_TONE_HI_3_DURATION 100				/// CUSTOMIZE
+
+#define BH_1CPO_PITCHOFFSET_SETTINGMODE 50		/// CUSTOMIZE
 
 // max size of setting conformation for now (1st letter):
 
@@ -48,8 +54,7 @@
 
 // Setting modes;
 
-/// CUSTOMIZE: nationalize 1st letter of Setting mode
-enum BH_1CPO_Setting_Mode
+enum BH_1CPO_Setting_Mode											/// CUSTOMIZE (nationalize)
 {
   SendWhat = 'S',
   OverallSpeed = 'O',
@@ -58,8 +63,7 @@ enum BH_1CPO_Setting_Mode
   CharSpeed = 'C'
 };
 
-/// CUSTOMIZE: nationalize 1st letter of Send What
-enum BH_1CPO_SendWhat_Mode
+enum BH_1CPO_SendWhat_Mode										/// CUSTOMIZE (nationalize)
 {
   SendQSOs = 'Q',
   SendGroups = 'G',
@@ -69,8 +73,7 @@ enum BH_1CPO_SendWhat_Mode
 
 // Discrete speeds to rotate through;
 
-/// CUSTOMIZE: use your own table of speeds to rotate through
-const byte BH_1CPO_Speeds[] =
+const byte BH_1CPO_Speeds[] =									/// CUSTOMIZE
 {
   5,
   7,
@@ -89,8 +92,7 @@ const byte BH_1CPO_Speeds[] =
 
 // Discrete pitches to rotate through:
 
-/// CUSTOMIZE: use your own table of pitches to rotate through
-const unsigned int BH_1CPO_Pitches[] =
+const unsigned int BH_1CPO_Pitches[] =				/// CUSTOMIZE
 {
   400,
   500,
@@ -130,11 +132,12 @@ const unsigned int BH_1CPO_Difficulties[] =
 
 void initIO();
 void handleReset();
+void beep();
 void startMorse();
 
 void debouncePB();
-void waitForPulledupButtonRelease(byte pPin);
-bool isPulledupButtonPressed(byte pPin);
+void waitForPulledupButtonRelease(BH_PIN pPin);
+bool isPulledupButtonPressed(BH_PIN pPin);
 
 void sendSettingMode();
 void sendSettingValue();

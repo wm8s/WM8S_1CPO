@@ -25,30 +25,47 @@ void initIO()
   pinMode(BH_1CPO_PB1, INPUT_PULLUP);
   pinMode(BH_1CPO_PB2, INPUT_PULLUP);
   pinMode(BH_1CPO_PB3, INPUT_PULLUP);
-
-  BH_1CPO.begin(BH_1CPO_TONEPIN);  
 }
 
 void handleReset()
 {
-  /// CUSTOMIZE: you can make this whichever buttons you want
   // if PB1 & PB2 are pressed when we come on, reset settings:
 
-  if (isPulledupButtonPressed(BH_1CPO_PB1) && isPulledupButtonPressed(BH_1CPO_PB2))
+  /// CUSTOMIZE: whichever buttons you want
+  if (isPulledupButtonPressed(BH_1CPO_PB1) &&
+  isPulledupButtonPressed(BH_1CPO_PB2))
   {
-    BH_1CPO.beepHi();
+    beep();
     
     // wait for him to release both buttons:
     
-    while (isPulledupButtonPressed(BH_1CPO_PB1) || isPulledupButtonPressed(BH_1CPO_PB2)) {}
+    while (isPulledupButtonPressed(BH_1CPO_PB1) ||
+    isPulledupButtonPressed(BH_1CPO_PB2)) {}
     
     BH_1CPO.resetSettings();
   }
 }
 
+void beep()
+{
+	// beep
+
+	for (byte i = 0; i < BH_1CPO_TONE_HI_1_LOOPS; i++)
+	{
+		tone(BH_1CPO.tonePin(), BH_1CPO_TONE_HI_1_HZ);
+		delay(BH_1CPO_TONE_HI_1_DURATION);
+		tone(BH_1CPO.tonePin(), BH_1CPO_TONE_HI_2_HZ);
+		delay(BH_1CPO_TONE_HI_2_DURATION);
+		noTone(BH_1CPO.tonePin());
+	}
+	delay(BH_1CPO_TONE_HI_3_DURATION);
+}
+
 void startMorse()
 {
   // start:
+
+  BH_1CPO.begin(BH_1CPO_TONEPIN);
   
   if (sending) BH_1CPO.setRunMode(sendingWhat);
   else BH_1CPO.setRunMode(BHMorse::Idle);
@@ -61,7 +78,7 @@ void debouncePB()
   delay(BH_1CPO_DEBOUNCE_TIME);
 }
 
-void waitForPulledupButtonRelease(byte pPin)
+void waitForPulledupButtonRelease(BH_PIN pPin)
 {
   // wait for him to let up on the switch:
   
@@ -69,7 +86,7 @@ void waitForPulledupButtonRelease(byte pPin)
   while (isPulledupButtonPressed(pPin)) {};
 }
 
-bool isPulledupButtonPressed(byte pPin)
+bool isPulledupButtonPressed(BH_PIN pPin)
 {
   // return true if passed INPUT_PULLUP PB is pressed:
   
@@ -153,7 +170,7 @@ BHMorse_Wpm nextSpeed(BHMorse_Wpm pSpeed)
   // that is greater than the passed speed
 
   byte p = 0;
-  byte numVals = ARRAY_SIZE(BH_1CPO_Speeds);
+  byte numVals = BH_ARRAY_SIZE(BH_1CPO_Speeds);
 
   // get the index in the array of the biggest element <= the passed value,
   // or 0 if < the lower item:
@@ -176,7 +193,7 @@ BHMorse_Hz nextPitch(BHMorse_Hz pPitch)
   // that is greater than the passed pitch
 
   byte p = 0;
-  byte numVals = ARRAY_SIZE(BH_1CPO_Pitches);
+  byte numVals = BH_ARRAY_SIZE(BH_1CPO_Pitches);
 
   // get the index in the array of the biggest element <= the passed value,
   // or 0 if < the lower item:
@@ -200,7 +217,7 @@ BHMorse_charElemMap_Group nextDifficulty(BHMorse_charElemMap_Group pDifficulty)
   // that is greater than the passed difficulty
 
   byte p = 0;
-  byte numVals = ARRAY_SIZE(BH_1CPO_Difficulties);
+  byte numVals = BH_ARRAY_SIZE(BH_1CPO_Difficulties);
 
   // get the index in the array of the biggest element <= the passed value,
   // or 0 if < the lower item:
@@ -336,7 +353,7 @@ void handlePB1Pressed()
 {
   // toggles sending flag:
   
-  BH_1CPO.beepHi();
+  beep();
   waitForPulledupButtonRelease(BH_1CPO_PB1);
 
   sending = !sending;
@@ -359,7 +376,7 @@ void handlePB2Pressed()
   // else
   //    rotate through Overall Speeds
   
-  BH_1CPO.beepHi();
+  beep();
   waitForPulledupButtonRelease(BH_1CPO_PB2);
 
   if (sending)
@@ -381,7 +398,7 @@ void handlePB3Pressed()
   // else
   //    rotate through Pitches
   
-  BH_1CPO.beepHi();
+  beep();
   waitForPulledupButtonRelease(BH_1CPO_PB3);
 
   if (sending)
