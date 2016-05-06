@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <BHMorse.h>
 
 #include "BH1CPO.h"
 
@@ -7,7 +6,7 @@
 //
 //  1CPO - My First Code Practice Oscillator. Like 3CPO, only mintier.
 //
-//  Written by: Rob Bailey, WM8S
+//	Copyright © 2016 Robert L. Bailey
 //
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -15,6 +14,23 @@
 //
 //  You can [probably] safely change anything marked with /// CUSTOMIZE: tag.
 //  Anything, and you're on your own.
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	This file is part of 1CPO.
+//
+//	1CPO is free software: you can redistribute it and/or modify
+//	it under the terms of the GNU General Public License as published by
+//	the Free Software Foundation, either version 3 of the License, or
+//	(at your option) any later version.
+//
+//	1CPO is distributed in the hope that it will be useful,
+//	but WITHOUT ANY WARRANTY; without even the implied warranty of
+//	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//	GNU General Public License for more details.
+//
+//	You should have received a copy of the GNU General Public License
+//	along with 1CPO.  If not, see <http://www.gnu.org/licenses/>.
 //
 ////////////////////////////////////////////////////////////////////////////////
 
