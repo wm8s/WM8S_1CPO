@@ -10,9 +10,6 @@
 //
 //  Header
 //
-//  You can [probably] safely change anything marked with /// CUSTOMIZE: tag.
-//  Anything, and you're on your own.
-//
 //////////////////////////////////////////////////////////////////////////////
 //
 //	This file is part of 1CPO.
@@ -153,16 +150,16 @@ void beep();
 void startMorse();
 
 void debouncePB();
-void waitForPulledupButtonRelease(BH_PIN pPin);
-bool isPulledupButtonPressed(BH_PIN pPin);
+void waitForPulledupButtonRelease(BH_pin_t pPin);
+bool isPulledupButtonPressed(BH_pin_t pPin);
 
 void sendSettingMode();
 void sendSettingValue();
 void sendSettingModeAndValue();
 
-BHMorse_Wpm nextSpeed(BHMorse_Wpm pSpeed);
-BHMorse_Hz nextPitch(BHMorse_Hz pPitch);
-BHMorse_charElemMap_Group nextDifficulty(BHMorse_charElemMap_Group pDifficulty);
+BHMorse::wpm_t nextSpeed(BHMorse::wpm_t pSpeed);
+BHMorse::hz_t nextPitch(BHMorse::hz_t pPitch);
+BHMorse::difficulty_t nextDifficulty(BHMorse::difficulty_t pDifficulty);
 
 void rotateSettingMode();
 void rotateSendWhat();

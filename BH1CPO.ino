@@ -12,9 +12,6 @@
 //
 //  Main sketch
 //
-//  You can [probably] safely change anything marked with /// CUSTOMIZE: tag.
-//  Anything, and you're on your own.
-//
 //////////////////////////////////////////////////////////////////////////////
 //
 //	This file is part of 1CPO.

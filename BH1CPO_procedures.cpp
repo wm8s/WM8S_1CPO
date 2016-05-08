@@ -13,9 +13,6 @@
 //
 //  Helper Procedures
 //
-//  You can [probably] safely change anything marked with /// CUSTOMIZE: tag.
-//  Anything, and you're on your own.
-//
 //////////////////////////////////////////////////////////////////////////////
 //
 //	This file is part of 1CPO.
@@ -48,7 +45,6 @@ void handleReset()
 {
   // if PB1 & PB2 are pressed when we come on, reset settings:
 
-  /// CUSTOMIZE: whichever buttons you want
   if (isPulledupButtonPressed(BH_1CPO_PB1) &&
   isPulledupButtonPressed(BH_1CPO_PB2))
   {
@@ -95,7 +91,7 @@ void debouncePB()
   delay(BH_1CPO_DEBOUNCE_TIME);
 }
 
-void waitForPulledupButtonRelease(BH_PIN pPin)
+void waitForPulledupButtonRelease(BH_pin_t pPin)
 {
   // wait for him to let up on the switch:
   
@@ -103,7 +99,7 @@ void waitForPulledupButtonRelease(BH_PIN pPin)
   while (isPulledupButtonPressed(pPin)) {};
 }
 
-bool isPulledupButtonPressed(BH_PIN pPin)
+bool isPulledupButtonPressed(BH_pin_t pPin)
 {
   // return true if passed INPUT_PULLUP PB is pressed:
   
@@ -118,7 +114,7 @@ void sendSettingMode()
   bufr[0] = settingMode;
   bufr[1] = '\0';
 
-  BHMorse_Hz oldPitch = BH_1CPO.pitch();
+  BHMorse::hz_t oldPitch = BH_1CPO.pitch();
   BH_1CPO.setPitch(BH_1CPO.pitch() + BH_1CPO_PITCHOFFSET_SETTINGMODE, false);
   BH_1CPO.sendMessage(bufr);
   BH_1CPO.setPitch(oldPitch, false);
@@ -159,7 +155,7 @@ void sendSettingValue()
       break;
 
     case Difficulty:
-      sprintf(bufr, "%i", BH_1CPO.highestEnabledGroup());
+      sprintf(bufr, "%i", BH_1CPO.enabledDifficulty());
       break;
 
     case Pitch:
@@ -181,7 +177,7 @@ void sendSettingModeAndValue()
   sendSettingValue();
 }
 
-BHMorse_Wpm nextSpeed(BHMorse_Wpm pSpeed)
+BHMorse::wpm_t nextSpeed(BHMorse::wpm_t pSpeed)
 {
   // return the next speed in the array of discrete speeds
   // that is greater than the passed speed
@@ -204,7 +200,7 @@ BHMorse_Wpm nextSpeed(BHMorse_Wpm pSpeed)
   return BH_1CPO_Speeds[p];
 }
 
-BHMorse_Hz nextPitch(BHMorse_Hz pPitch)
+BHMorse::hz_t nextPitch(BHMorse::hz_t pPitch)
 {
   // return the next pitch in the array of discrete pitches
   // that is greater than the passed pitch
@@ -228,7 +224,7 @@ BHMorse_Hz nextPitch(BHMorse_Hz pPitch)
 }
 
 
-BHMorse_charElemMap_Group nextDifficulty(BHMorse_charElemMap_Group pDifficulty)
+BHMorse::difficulty_t nextDifficulty(BHMorse::difficulty_t pDifficulty)
 {
   // return the next difficulty in the array of discrete difficulties
   // that is greater than the passed difficulty
@@ -255,7 +251,6 @@ void rotateSettingMode()
 {
   // rotate setting mode
 
-  /// CUSTOMIZE: you can change this order, as long as it makes a circle
   switch (settingMode)
   {
     case SendWhat:
@@ -286,7 +281,6 @@ void rotateSendWhat()
 {
   // rotate run mode:
   
-  /// CUSTOMIZE: you can change this order, as long as it makes a circle
   switch (sendingWhat)
   {
     case BHMorse::SendQSOs:
@@ -333,14 +327,13 @@ void rotateDifficulty()
 {
   // rotate difficulty:
   
-  BH_1CPO.setHighestEnabledGroup(nextDifficulty(BH_1CPO.highestEnabledGroup()));
+  BH_1CPO.setEnabledDifficulty(nextDifficulty(BH_1CPO.enabledDifficulty()));
 }
 
 void rotateSettingValue()
 {
   // rotate setting value of current setting mode
 
-  /// CUSTOMIZE: you can change this order, as long as it makes a circle
   switch (settingMode)
   {
     case SendWhat:
